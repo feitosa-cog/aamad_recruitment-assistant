@@ -1,3 +1,208 @@
+# AI Recruitment Assistant
+
+> A multi-agent AI system that automates candidate sourcing, evaluation, and recommendation for small businesses. Built using the AAMAD framework with CrewAI.
+
+---
+
+## Project Title and Description
+
+The **AI Recruitment Assistant** is a multi-agent system that automates the end-to-end recruitment process — from candidate sourcing to evaluation and recommendation.
+
+### What It Does
+
+1. **Parses job descriptions** into structured requirements
+2. **Searches and sources candidates** using AI agents
+3. **Evaluates resumes** against job criteria with match scoring
+4. **Provides ranked recommendations** with clear rationale
+
+### Value Proposition
+
+> **"Reduce time-to-hire by 80% with AI agents that source, evaluate, and recommend qualified candidates — without the enterprise price tag."**
+
+| Metric | Target |
+|--------|--------|
+| Time to Source Candidates | < 1 hour (vs 15-20 hrs manual) |
+| Candidate Match Accuracy | ≥ 85% |
+| Recruiter Satisfaction | ≥ 4.5/5 |
+
+---
+
+## Problem Statement
+
+Manual candidate sourcing and evaluation is highly inefficient for small businesses:
+
+| Issue | Why It Matters |
+|-------|----------------|
+| **Time-Consuming Sourcing** | Recruiters spend 60-70% of time on manual sourcing |
+| **Inconsistent Evaluation** | Human bias leads to uneven candidate assessments |
+| **High Volume Handling** | Can't scale during peak hiring periods |
+| **Poor Candidate Matching** | Qualified candidates slip through the cracks |
+| **Delayed Response Times** | Top candidates accept competing offers |
+
+---
+
+## Features
+
+### Core Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Candidate Search** | AI agents search and source candidates based on job requirements |
+| **Automated Evaluation** | Resume screening against job criteria with match scoring (0-100) |
+| **Ranked Recommendations** | Sorted candidate list with match scores and rationale |
+| **Job Description Parsing** | Natural language processing of job requirements |
+| **Source Attribution** | Track and display candidate source channels |
+
+### Out of Scope (v1)
+
+- Full ATS integration
+- Candidate communication automation
+- Advanced analytics and reporting
+- Job posting system integration
+- Video interview platform
+- Multi-language support
+
+---
+
+## Architecture Overview
+
+### Application Crew
+
+The system uses a **multi-agent crew architecture** with three specialized agents:
+
+```
+Job Description → [Researcher] → Candidates → [Evaluator] → Scored → [Recommender] → Ranked Results
+```
+
+### Agent Roles and Responsibilities
+
+| Agent | Role | Responsibilities |
+|-------|------|------------------|
+| **Researcher Agent** | Candidate Sourcing | Parse job requirements, search channels, aggregate profiles, deduplicate |
+| **Evaluator Agent** | Candidate Evaluation | Score resumes (0-100), identify matching skills, generate match rationale |
+| **Recommender Agent** | Recommendations | Aggregate scores, rank by fit, generate summary reports |
+
+### Agent Collaboration
+
+1. User submits job description
+2. **Researcher** finds and lists candidates
+3. **Evaluator** scores each candidate against requirements
+4. **Recommender** ranks and summarizes top candidates
+5. User receives ranked candidate report
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+- Node.js 18+
+- PostgreSQL 14+
+- Google Gemini API key
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd recruitment-assistant
+
+# Backend setup
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# Frontend setup
+cd ../frontend
+npm install
+```
+
+### Configuration
+
+1. **Backend**: Create `.env` file in `backend/`:
+   ```
+   GEMINI_API_KEY=your_gemini_api_key
+   DATABASE_URL=postgresql://user:pass@localhost:5432/recruitment
+   ```
+
+2. **Frontend**: Create `.env` file in `frontend/`:
+   ```
+   VITE_API_URL=http://localhost:8000
+   ```
+
+### Running the Application
+
+```bash
+# Backend
+cd backend
+uvicorn main:app --reload
+
+# Frontend (new terminal)
+cd frontend
+npm run dev
+```
+
+### Basic Usage
+
+1. Open `http://localhost:5173` in your browser
+2. Enter a job description in natural language
+3. Click "Search Candidates"
+4. View ranked results with match scores
+
+---
+
+## Project Structure
+
+### AAMAD Directory Structure
+
+```
+recruitment-assistant/
+├── .github/
+│   └── agents/              # Agent persona definitions
+├── project-context/
+│   ├── 1.define/            # Phase 1: Define artifacts (MRD, PRD)
+│   ├── 2.build/             # Phase 2: Build artifacts
+│   └── 3.deliver/           # Phase 3: Delivery artifacts
+├── backend/                  # Python/FastAPI backend
+├── frontend/                 # React + TypeScript frontend
+└── README.md                # This file
+```
+
+### Key Artifacts
+
+| Artifact | Location | Description |
+|----------|----------|-------------|
+| MRD | `project-context/1.define/mrd.md` | Market Research Document |
+| PRD | `project-context/1.define/prd.md` | Product Requirements Document |
+| Handoff | `project-context/1.define/handoff.md` | Context handoff to System Architect |
+
+---
+
+## Development Status
+
+### Current Phase: **Define** ✅ Complete
+
+| Completed | Description |
+|-----------|-------------|
+| ✅ Market Research | MRD with competitive analysis and market opportunity |
+| ✅ Product Requirements | PRD with user stories, features, and success metrics |
+| ✅ Documentation | README, PROJECT_README, handoff summary |
+
+### What's Next
+
+| Step | Owner | Status |
+|------|-------|--------|
+| Create SAD | @system.arch | Pending |
+| Scaffold project | @project.mgr | Pending |
+| Implement backend | @backend.eng | Pending |
+| Build frontend | @frontend.eng | Pending |
+| Integrate | @integration.eng | Pending |
+| QA validation | @qa.eng | Pending |
+
+---
+
 # AAMAD – AI-Assisted Multi-Agent Application Development Framework
 
 **AAMAD** is an open, production-grade framework for building, deploying, and evolving multi-agent applications using best context engineering practices.  
