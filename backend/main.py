@@ -61,7 +61,7 @@ async def health_check():
     }
 
 
-@app.post("/api/recruit", response_model=RecruitmentResponse)
+@app.post("/api/recruit")
 async def recruit_candidates(request: RecruitmentRequest):
     """
     Start the recruitment pipeline.
@@ -87,11 +87,12 @@ async def recruit_candidates(request: RecruitmentRequest):
             "timestamp": time.time(),
         }
         
-        return RecruitmentResponse(
-            job_description=request.job_description,
-            recommendations=recommendations,
-            status="completed",
-        )
+        # Return format matching frontend expectations
+        return {
+            "candidates": recommendations.candidates,
+            "total_searched": recommendations.total_searched,
+            "processing_time_seconds": processing_time,
+        }
         
     except Exception as e:
         raise HTTPException(
