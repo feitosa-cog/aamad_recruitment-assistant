@@ -1,0 +1,1 @@
+{"kind":"FETCH","data":{"headers":{"content-length":"75","content-type":"application/json","date":"Mon, 27 Apr 2026 03:39:46 GMT","server":"uvicorn"},"body":"eyJzdGF0dXMiOiJoZWFsdGh5Iiwic2VydmljZSI6IkFJIFJlY3J1aXRtZW50IEFzc2lzdGFudCIsInZlcnNpb24iOiIxLjAuMCJ9","status":200,"url":"http://localhost:8000/api/health"},"revalidate":31536000,"tags":[]}

@@ -42,11 +42,16 @@ export default function ChatInterface() {
     try {
       const response = await submitJobDescription(userMessage.content);
       
+      // Safely handle potentially undefined response properties
+      const candidates = response?.candidates ?? [];
+      const totalSearched = response?.total_searched ?? 0;
+      const processingTime = response?.processing_time_seconds ?? 0;
+      
       const assistantMessage: ChatMessage = {
         id: loadingMessage.id,
         role: 'assistant',
-        content: `Found ${response.candidates.length} candidates from ${response.total_searched} searched in ${response.processing_time_seconds.toFixed(1)}s`,
-        candidates: response.candidates,
+        content: `Found ${candidates.length} candidates from ${totalSearched} searched in ${processingTime.toFixed(1)}s`,
+        candidates: candidates,
         isLoading: false,
       };
 
