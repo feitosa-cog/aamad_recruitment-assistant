@@ -66,6 +66,16 @@ Manual candidate sourcing and evaluation is highly inefficient for small busines
 
 ## Architecture Overview
 
+### Technology Stack
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | Next.js + Tailwind CSS | Chat interface for job input and results |
+| **Backend** | FastAPI (Python) | CrewAI orchestration and API layer |
+| **Agents** | CrewAI | Researcher, Evaluator, Recommender crew |
+| **LLM** | Gemini API | Power all agent reasoning |
+| **Database** | SQLite | Candidate and evaluation storage |
+
 ### Application Crew
 
 The system uses a **multi-agent crew architecture** with three specialized agents:
@@ -82,10 +92,18 @@ Job Description → [Researcher] → Candidates → [Evaluator] → Scored → [
 | **Evaluator Agent** | Candidate Evaluation | Score resumes (0-100), identify matching skills, generate match rationale |
 | **Recommender Agent** | Recommendations | Aggregate scores, rank by fit, generate summary reports |
 
+### API Endpoints
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/recruit` | POST | Submit job description, get candidate recommendations |
+| `/api/health` | GET | Health check |
+| `/api/candidates` | GET | List cached candidates (optional) |
+
 ### Agent Collaboration
 
-1. User submits job description
-2. **Researcher** finds and lists candidates
+1. User submits job description via frontend
+2. **Researcher** finds and lists candidates from mock data
 3. **Evaluator** scores each candidate against requirements
 4. **Recommender** ranks and summarizes top candidates
 5. User receives ranked candidate report
@@ -96,10 +114,11 @@ Job Description → [Researcher] → Candidates → [Evaluator] → Scored → [
 
 ### Prerequisites
 
-- Python 3.10+
-- Node.js 18+
-- PostgreSQL 14+
-- Google Gemini API key
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| Python | 3.10+ | For backend |
+| Node.js | 18+ | For frontend |
+| Gemini API Key | - | Get from Google AI Studio |
 
 ### Installation
 
@@ -121,16 +140,14 @@ npm install
 
 ### Configuration
 
-1. **Backend**: Create `.env` file in `backend/`:
-   ```
-   GEMINI_API_KEY=your_gemini_api_key
-   DATABASE_URL=postgresql://user:pass@localhost:5432/recruitment
-   ```
+Create `.env` file in project root:
 
-2. **Frontend**: Create `.env` file in `frontend/`:
-   ```
-   VITE_API_URL=http://localhost:8000
-   ```
+```bash
+# Gemini API Configuration
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+> **Note:** The application uses SQLite (file-based) for MVP. No database server required.
 
 ### Running the Application
 
@@ -146,10 +163,10 @@ npm run dev
 
 ### Basic Usage
 
-1. Open `http://localhost:5173` in your browser
-2. Enter a job description in natural language
-3. Click "Search Candidates"
-4. View ranked results with match scores
+1. Open `http://localhost:3000` in your browser
+2. Enter a job description (e.g., "Looking for a Python developer with ML experience")
+3. Click "Search"
+4. View ranked candidate recommendations with match scores
 
 ---
 
@@ -182,24 +199,94 @@ recruitment-assistant/
 
 ## Development Status
 
-### Current Phase: **Define** ✅ Complete
+### Current Phase: **Build** ✅ Complete
 
-| Completed | Description |
-|-----------|-------------|
-| ✅ Market Research | MRD with competitive analysis and market opportunity |
-| ✅ Product Requirements | PRD with user stories, features, and success metrics |
-| ✅ Documentation | README, PROJECT_README, handoff summary |
+| Phase | Status | Description |
+|-------|--------|-------------|
+| **Define** | ✅ Complete | MRD, PRD, handoff documents |
+| **Build** | ✅ Complete | SAD, frontend, backend scaffold |
+| **Deliver** | 🔄 In Progress | Integration and QA |
 
-### What's Next
+### Completed Artifacts
 
-| Step | Owner | Status |
-|------|-------|--------|
-| Create SAD | @system.arch | Pending |
-| Scaffold project | @project.mgr | Pending |
-| Implement backend | @backend.eng | Pending |
-| Build frontend | @frontend.eng | Pending |
-| Integrate | @integration.eng | Pending |
-| QA validation | @qa.eng | Pending |
+| Artifact | Location | Status |
+|----------|----------|--------|
+| MRD | `project-context/1.define/mrd.md` | ✅ Complete |
+| PRD | `project-context/1.define/prd.md` | ✅ Complete |
+| SAD | `project-context/2.build/sad.md` | ✅ Complete |
+| Architecture Plan | `project-context/2.build/architecture-plan.md` | ✅ Complete |
+| Frontend Plan | `project-context/2.build/frontend-plan.md` | ✅ Complete |
+| Frontend | `frontend/` | ✅ Complete |
+| Backend | `backend/` | 🔄 In Progress |
+
+---
+
+## How to Run the Application
+
+### Prerequisites
+
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| Python | 3.10+ | For backend |
+| Node.js | 18+ | For frontend |
+| Gemini API Key | - | Get from Google AI Studio |
+
+### Environment Setup
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd recruitment-assistant
+
+# 2. Set up backend
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Set up frontend
+cd ../frontend
+npm install
+```
+
+### Configuration
+
+Create `.env` file in project root:
+
+```bash
+# Gemini API Configuration
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### Running the Application
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
+source venv/bin/activate
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+
+### Access Points
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | http://localhost:3000 | Chat interface |
+| Backend API | http://localhost:8000 | FastAPI server |
+| API Docs | http://localhost:8000/docs | OpenAPI documentation |
+
+### Basic Usage
+
+1. Open `http://localhost:3000` in your browser
+2. Enter a job description (e.g., "Looking for a Python developer with ML experience")
+3. Click "Search"
+4. View ranked candidate recommendations with match scores
 
 ---
 
